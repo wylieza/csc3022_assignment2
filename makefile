@@ -6,11 +6,14 @@ xargs = MRI -x 1 output_x
 dargs = MRI -d 1 1 output_d
 blankargs = MRI
 
-volimage: volimage.o
-	$(GCC) -o volimage volimage.o $(VER)
+volimage: volimage.o processor.o
+	$(GCC) -o volimage volimage.o processor.o $(VER)
 
 volimage.o: volimage.cpp
 	$(GCC) -c -o volimage.o volimage.cpp $(VER)
+
+processor.o: processor.cpp
+	$(GCC) -c -o processor.o processor.cpp $(VER)
 
 run: volimage
 	./volimage ${args}
@@ -25,4 +28,4 @@ runblank: volimage
 	./volimage ${blankargs}
 
 clean:
-	rm -rf volimage volimage.o
+	rm -rf volimage volimage.o processor processor.o

@@ -3,6 +3,32 @@
 namespace WYLJUS002{
 
     //Functions
+    VolImage::VolImage(){ //Default constructor
+
+    }
+    VolImage::~VolImage(){ //Default destructor
+
+    }
+
+    bool VolImage::readImages(std::string baseName){
+        return false;
+    }
+
+
+    void VolImage::diffmap(int scaleI, int sliceJ, std::string output_prefix){
+
+    }
+
+    void VolImage::extract(int sliceId, std::string output_prefix){
+
+    }
+
+
+    int VolImage::volImageSize(void){
+
+    }
+
+
     int * VolImage::extract_dimensions(std::string image_set){
         int *dim = new int[3];
         std::ifstream infile("./brain_mri_raws/" + image_set + ".data");

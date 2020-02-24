@@ -1,5 +1,5 @@
-#ifndef VOLIMAGE
-#define VOLIMAGE
+#ifndef PROCESSOR
+#define PROCESSOR
 
 #include<vector>
 #include<iostream>
@@ -15,10 +15,6 @@ namespace WYLJUS002{
 
             std::string file_name;
 
-            int * extract_dimensions(std::string image_set);
-
-            void extract_image(std::string file_name, int image_index, int * set_details); //Extract a file given known width and height
-
         public:
             VolImage(); //Default constructor
             ~VolImage(); //Default destructor
@@ -32,6 +28,11 @@ namespace WYLJUS002{
 
 
             int volImageSize(void);
+
+            int * extract_dimensions(std::string image_set);
+
+            void extract_image(std::string file_name, int image_index, int * set_details); //Extract a file given known width and height
+            
 
     };
 
