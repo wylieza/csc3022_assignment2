@@ -3,12 +3,20 @@
 
 #include<vector>
 #include<iostream>
+#include<fstream>
+#include<sstream>
 
 
 class VolImage{
     private:
         int width, height; //Image stack's width and height
         std::vector<unsigned char**> slices; //Vector to hold the volimage's slices
+
+        std::string file_name;
+
+        int * extract_dimensions(std::string image_set);
+
+        void extract_image(std::string file_name, int image_index, int * set_details); //Extract a file given known width and height
 
     public:
         VolImage(); //Default constructor
