@@ -6,7 +6,7 @@ namespace WYLJUS002{
     //Functions
     int * extract_dimensions(std::string image_set){
         int *dim = new int[3];
-        std::ifstream infile(image_set + ".data");
+        std::ifstream infile("./brain_mri_raws/" + image_set + ".data");
 
         std::string line;
         std::stringstream ss;
@@ -17,10 +17,10 @@ namespace WYLJUS002{
                     ss >> *(dim+i);
                 }
             }else{
-                std::cout << "Error, file containing image set dimensions empty!";
+                std::cout << "Error, file containing image set dimensions empty!\n";
             }
         }else{
-            std::cout << "Error opening file containing image set dimensions";
+            std::cout << "Error opening file containing image set dimensions\n";
         }
         return dim; //TODO: Add a value to specify error in reading data
     }
@@ -56,8 +56,15 @@ int main(int argc, char* argv[]){
     //std::vector<std::string> args;
         //args.push_back(std::string(argv[i]));
         //std::cout << args[i-1] << " ";
-    if (argc > 1){
+
+    if(argc >= 2){
+        std::cout << "No action specified...\n";
         args.image_set = argv[1];
+    }else{
+        std::cout << "You must specify arguments!\n";
+        exit(0);
+    }
+    if (argc > 2){
         if(argv[2][1] == 'd'){ //TODO make this case insensitive
             if(argc != 6){
                 std::cout << "Invalid number of arguments detected\n";
@@ -77,13 +84,8 @@ int main(int argc, char* argv[]){
                 args.i = argv[3][0] - '0';
                 args.outf_name = argv[4];
             }
-        }else{
-            std::cout << "No action specified...\n";
         }
         
-    }else{
-        std::cout << "You must specify arguments!\n";
-        exit(0);
     }
 
     WYLJUS002::extract_image(args.image_set, args.i, WYLJUS002::extract_dimensions(args.image_set));
