@@ -21,17 +21,15 @@ namespace WYLJUS002{
 
             bool readImages(std::string baseName);
 
-
             void diffmap(int scaleI, int sliceJ, std::string output_prefix);
 
             void extract(int sliceId, std::string output_prefix);
-
 
             int volImageSize(void);
 
             int * extract_dimensions(std::string image_set);
 
-            void extract_image(std::string file_name, int image_index, int * set_details); //Extract a file given known width and height
+            void extract_image(std::string base_name, int image_index, int * set_details); //Extract a file given known width and height
             
 
     };
