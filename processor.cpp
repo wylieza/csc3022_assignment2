@@ -28,7 +28,6 @@ namespace WYLJUS002{
 
     }
 
-
     int * VolImage::extract_dimensions(std::string image_set){
         int *dim = new int[3];
         std::ifstream infile("./brain_mri_raws/" + image_set + ".data");
@@ -47,10 +46,12 @@ namespace WYLJUS002{
         }else{
             std::cout << "Error opening file containing image set dimensions\n";
         }
+        width = *dim;
+        height = *(dim+1);
         return dim; //TODO: Add a value to specify error in reading data
     }
 
-    void VolImage::extract_image(std::string base_name, int image_index, int *set_details){
+    u_char** VolImage::extract_image(std::string base_name, int image_index, int *set_details){
         std::cout << "File name: " << base_name << "\n";
         std::cout << "Image index: " << image_index << "\n";
         std::cout << "width: " << *set_details << " height: " << *(set_details+1) << " num images: " << *(set_details+2) << "\n";
@@ -80,8 +81,11 @@ namespace WYLJUS002{
                     infile.read(row_buffer, *set_details);
                     slice[h] = (u_char*) row_buffer;
                 }
+                delete(row_buffer); //memory cleanup
+                infile.close();
             
             std::cout << "Image slice stored" << std::endl;
+            return slice;
             
             }else{
                 std::cout << "Error: The image dimensions do not match those spcified in data file";
@@ -89,10 +93,29 @@ namespace WYLJUS002{
 
         }else{
             std::cout << "An error has occured during reading the file!";
-        }    
+        }  
+    }
 
-    
-    
+    void VolImage::write_image(std::string of_name, u_char ** slice){
+        std::stringstream strs;
+        strs << of_name << ".raw";
+        std::ofstream outfile(strs.str(), std::ios::binary);
+
+        if(outfile){
+            char* buffer;
+            for(int h = 0; h < height; h++){
+                buffer = (char*) slice[h];
+                for (int w = 0; w < width; w++){ //No improvement :(
+                    outfile.write(&buffer[w], 1);
+                }
+            }
+            outfile.close();
+
+            std::cout << "File write success\n";
+
+        }else{
+            std::cout << "Error occured while trying to writer to file\n";
+        }
     }
 
 

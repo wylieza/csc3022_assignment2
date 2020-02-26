@@ -53,6 +53,7 @@ int main(int argc, char* argv[]){
         
     }
 
-    processor.extract_image(args.image_set, args.i, processor.extract_dimensions(args.image_set));
+    u_char ** slice = processor.extract_image(args.image_set, args.i, processor.extract_dimensions(args.image_set));
+    processor.write_image("output_test", slice);
 
 }
