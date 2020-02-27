@@ -7,7 +7,12 @@ namespace WYLJUS002{
 
     }
     VolImage::~VolImage(){ //Default destructor
-
+        for (auto vec_it = slices.begin(); vec_it < slices.end(); vec_it++){
+            for(int i = 0; i < height; i++){
+                //delete(vec_it[i]);
+            }
+            //delete(&vec_it);
+        }
     }
 
     bool VolImage::readImages(std::string baseName){
@@ -44,6 +49,12 @@ namespace WYLJUS002{
 
 
     void VolImage::diffmap(int scaleI, int sliceJ, std::string output_prefix){
+        /*
+        difference map:
+        computes the difference map between “slices” i and j. 
+        Every outputpixel at coordinate (r,c) is computed as follows:
+        (unsigned char)(abs((float)volume[i][r][c] - (float)volume[j][r][c])/2)
+        */
 
     }
 
@@ -64,7 +75,7 @@ namespace WYLJUS002{
 
 
     int VolImage::volImageSize(void){
-
+        //return the number of bytes used to store image data and pointers (excl. vector's size)
     }
 
     unsigned char** VolImage::extract_image(std::string base_name, int image_index){

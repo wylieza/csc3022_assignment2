@@ -60,7 +60,4 @@ int main(int argc, char* argv[]){
         exit(0);
     }
 
-    //processor.readImages(args.image_set);
-    //processor.write_image("output_test", 1);
-
 }
