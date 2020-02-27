@@ -51,15 +51,15 @@ namespace WYLJUS002{
         return dim; //TODO: Add a value to specify error in reading data
     }
 
-    u_char** VolImage::extract_image(std::string base_name, int image_index, int *set_details){
+    unsigned char** VolImage::extract_image(std::string base_name, int image_index, int *set_details){
         std::cout << "File name: " << base_name << "\n";
         std::cout << "Image index: " << image_index << "\n";
         std::cout << "width: " << *set_details << " height: " << *(set_details+1) << " num images: " << *(set_details+2) << "\n";
     
-        u_char ** slice;
-        slice = new u_char*[*(set_details+1)];
+        unsigned char ** slice;
+        slice = new unsigned char*[*(set_details+1)];
         for (int i = 0; i < *(set_details+1); i++){
-            slice[i] = new u_char[*set_details];
+            slice[i] = new unsigned char[*set_details];
         }
 
         std::stringstream strs;
@@ -75,13 +75,23 @@ namespace WYLJUS002{
             infile.seekg(0, infile.beg);
 
             //Determine if dimensions match specs and READ
-            char* row_buffer = new char[*set_details]; //Tempory reading buffer
             if(*set_details**(set_details+1) == length){
                 for (int h = 0; h < *(set_details+1); h++){
+                    char* row_buffer = new char[*set_details]; //Allocate memory for a row
                     infile.read(row_buffer, *set_details);
-                    slice[h] = (u_char*) row_buffer;
+                    slice[h] = (unsigned char*) row_buffer; //Store pointer to allocated memory
+
+                    if(h == 0){ //Appears to get the correct data!
+                        std::cout << slice << std::endl; //debug
+                        std::cout << "Printing 30 chars\n";
+                        for(int i = 0; i < 30; i++){
+                            std::cout << "char number: " << i << " is: " << (int) slice[0][i] << std::endl;
+                        }
+                    }
+
+
                 }
-                delete(row_buffer); //memory cleanup
+                
                 infile.close();
             
             std::cout << "Image slice stored" << std::endl;
@@ -96,7 +106,7 @@ namespace WYLJUS002{
         }  
     }
 
-    void VolImage::write_image(std::string of_name, u_char ** slice){
+    void VolImage::write_image(std::string of_name, unsigned char ** slice){
         std::stringstream strs;
         strs << of_name << ".raw";
         std::ofstream outfile(strs.str(), std::ios::binary);
@@ -104,10 +114,19 @@ namespace WYLJUS002{
         if(outfile){
             char* buffer;
             for(int h = 0; h < height; h++){
-                buffer = (char*) slice[h];
-                for (int w = 0; w < width; w++){ //No improvement :(
-                    outfile.write(&buffer[w], 1);
+
+                if(h == 0){ //debug
+                    std::cout << slice << std::endl;
+                    std::cout << "Printing 30 chars\n";
+                    for(int i = 0; i < 30; i++){
+                        std::cout << "char number: " << i << " is: " << (int) slice[0][i] << std::endl;
+                    }
                 }
+
+
+
+                buffer = (char*) slice[h];
+                outfile.write(buffer, width);
             }
             outfile.close();
 

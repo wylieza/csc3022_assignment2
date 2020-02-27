@@ -29,9 +29,9 @@ namespace WYLJUS002{
 
             int * extract_dimensions(std::string image_set);
 
-            u_char** extract_image(std::string base_name, int image_index, int * set_details); //Extract a file given known width and height
+            unsigned char** extract_image(std::string base_name, int image_index, int * set_details); //Extract a file given known width and height
             
-            void write_image(std::string of_name, u_char ** slice); //Write image to file
+            void write_image(std::string of_name, unsigned char ** slice); //Write image to file
 
     };
 
