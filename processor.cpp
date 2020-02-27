@@ -47,8 +47,19 @@ namespace WYLJUS002{
 
     }
 
-    void VolImage::extract(int sliceId, std::string output_prefix){
+    void VolImage::extract(int sliceId, std::string output_prefix){ //What is output_prefix for?
+        //Write image slice
+        write_image("output", sliceId); //Doc says the slice should be called output
+        //Write data file
+        std::ofstream outfile("output.data");
 
+        if(outfile){
+            outfile << width << " " << height << " " << "1";
+            outfile.close();
+            std::cout << "Data file write success\n";
+        }else{
+            std::cout << "Error occured while trying to writer to file\n";
+        }
     }
 
 
@@ -113,7 +124,7 @@ namespace WYLJUS002{
             }
             outfile.close();
 
-            std::cout << "File write success\n";
+            std::cout << "Raw file write success\n";
 
         }else{
             std::cout << "Error occured while trying to writer to file\n";

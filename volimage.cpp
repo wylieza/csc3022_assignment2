@@ -26,7 +26,7 @@ int main(int argc, char* argv[]){
         args.image_set = argv[1];
         processor.readImages(args.image_set);    
 
-        processor.print_stats();
+        processor.print_stats(); //Check these results!
     }else if (argc == 6 || argc == 5){
         args.image_set = argv[1];
         if(argv[2][1] == 'd'){ //TODO make this case insensitive
@@ -49,7 +49,8 @@ int main(int argc, char* argv[]){
                 args.outf_name = argv[4];
 
                 processor.readImages(args.image_set);
-                processor.write_image(args.outf_name, args.i);
+                processor.extract(args.i, args.outf_name);
+
             }
         }else{
             std::cout << "Unknown action specifier!\n";
