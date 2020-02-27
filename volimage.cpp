@@ -5,7 +5,7 @@ int main(int argc, char* argv[]){
 
     WYLJUS002::VolImage processor; //Object of the VolImage class
     //Args handler
-    std::cout << "There are " << argc << " arguments\n";
+    //std::cout << "There are " << argc << " arguments\n";
 
     struct arg_params{
             std::string image_set;
@@ -22,14 +22,13 @@ int main(int argc, char* argv[]){
         //args.push_back(std::string(argv[i]));
         //std::cout << args[i-1] << " ";
 
-    if(argc >= 2){
-        std::cout << "No action specified...\n";
+    if(argc == 2){ //Load, memory usage details, cleanup
         args.image_set = argv[1];
-    }else{
-        std::cout << "You must specify arguments!\n";
-        exit(0);
-    }
-    if (argc > 2){
+        processor.readImages(args.image_set);    
+
+        processor.print_stats();
+    }else if (argc == 6 || argc == 5){
+        args.image_set = argv[1];
         if(argv[2][1] == 'd'){ //TODO make this case insensitive
             if(argc != 6){
                 std::cout << "Invalid number of arguments detected\n";
@@ -44,16 +43,23 @@ int main(int argc, char* argv[]){
             if(argc != 5){
                 std::cout << "Invalid number of arguments detected\n";
                 exit(0);
-            }else{            
+            }else{ //Perform the extract operation         
                 args.x = true;
                 args.i = argv[3][0] - '0';
                 args.outf_name = argv[4];
+
+                processor.readImages(args.image_set);
+                processor.write_image(args.outf_name, args.i);
             }
-        }
-        
+        }else{
+            std::cout << "Unknown action specifier!\n";
+        }        
+    }else{
+        std::cout << "You must specify a valid number of arguments!\n";
+        exit(0);
     }
 
-    unsigned char ** slice = processor.extract_image(args.image_set, args.i, processor.extract_dimensions(args.image_set));
-    processor.write_image("output_test", slice);
+    //processor.readImages(args.image_set);
+    //processor.write_image("output_test", 1);
 
 }

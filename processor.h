@@ -11,6 +11,7 @@ namespace WYLJUS002{
     class VolImage{
         private:
             int width, height; //Image stack's width and height
+            int num_images;
             std::vector<unsigned char**> slices; //Vector to hold the volimage's slices
 
             std::string file_name;
@@ -27,11 +28,11 @@ namespace WYLJUS002{
 
             int volImageSize(void);
 
-            int * extract_dimensions(std::string image_set);
-
-            unsigned char** extract_image(std::string base_name, int image_index, int * set_details); //Extract a file given known width and height
+            unsigned char** extract_image(std::string base_name, int image_index); //Extract a file given known width and height
             
-            void write_image(std::string of_name, unsigned char ** slice); //Write image to file
+            void write_image(std::string of_name, int index); //Write image slice to file
+
+            void print_stats();
 
     };
 
