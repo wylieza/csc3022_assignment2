@@ -3,7 +3,7 @@ GCC = g++
 VER = -std=c++11
 
 xargs = MRI -x 1 output_x
-dargs = MRI -d 1 1 output_d
+dargs = MRI -d 0 1 output_d
 blankargs = MRI
 
 volimage: volimage.o processor.o

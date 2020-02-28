@@ -33,11 +33,15 @@ int main(int argc, char* argv[]){
             if(argc != 6){
                 std::cout << "Invalid number of arguments detected\n";
                 exit(0);
-            }else{            
+            }else{ // Perform the diffmap operation   
+            std::cout << "Diffmap\n";       
                 args.d = true;
                 args.i = argv[3][0] - '0';
                 args.j = argv[4][0] - '0';
                 args.outf_name = argv[5];
+
+                processor.readImages(args.image_set);
+                processor.diffmap(args.i, args.j, args.outf_name);
             }
         }else if(argv[2][1] == 'x'){
             if(argc != 5){

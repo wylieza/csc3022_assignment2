@@ -22,7 +22,7 @@ namespace WYLJUS002{
 
             bool readImages(std::string baseName);
 
-            void diffmap(int scaleI, int sliceJ, std::string output_prefix);
+            void diffmap(int sliceI, int sliceJ, std::string output_prefix);
 
             void extract(int sliceId, std::string output_prefix);
 
@@ -31,6 +31,8 @@ namespace WYLJUS002{
             unsigned char** extract_image(std::string base_name, int image_index); //Extract a file given known width and height
             
             void write_image(std::string of_name, int index); //Write image slice to file
+
+            void write_image(std::string of_name, unsigned char** image_slice); //Overload for when slice is not in slices
 
             void print_stats();
 
