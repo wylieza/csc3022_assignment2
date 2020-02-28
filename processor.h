@@ -32,7 +32,7 @@ namespace WYLJUS002{
             
             void write_image(std::string of_name, int index); //Write image slice to file
 
-            void write_image(std::string of_name, unsigned char** image_slice); //Overload for when slice is not in slices
+            void write_image(std::string of_name, unsigned char** image_slice); //Overloading
 
             void print_stats();
 

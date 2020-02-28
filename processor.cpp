@@ -4,10 +4,9 @@ namespace WYLJUS002{
 
     //Functions
     VolImage::VolImage(){ //Default constructor
-
     }
+
     VolImage::~VolImage(){ //Default destructor
-        std::cout << "Memory Cleanup\n";
         for (int i = 0; i < num_images; i++){
             for(int h = 0; h < height; h++){
                 delete[] (slices[i][h]);
@@ -18,7 +17,7 @@ namespace WYLJUS002{
     }
 
     bool VolImage::readImages(std::string baseName){
-        std::ifstream infile("./brain_mri_raws/" + baseName + ".data");
+        std::ifstream infile("./" + baseName + "/" + baseName + ".data");
 
         std::string line;
         std::stringstream ss;
@@ -51,13 +50,6 @@ namespace WYLJUS002{
 
 
     void VolImage::diffmap(int scliceI, int sliceJ, std::string output_prefix){
-        /*
-        difference map:
-        computes the difference map between “slices” i and j. 
-        Every outputpixel at coordinate (r,c) is computed as follows:
-        (unsigned char)(abs( (float)volume[i][r][c] - (float)volume[j][r][c]) /2)
-        */
-       std::cout << "Prepare memory resources\n";
        unsigned char** slicei = slices[scliceI];
        unsigned char** slicej = slices[sliceJ];
        unsigned char** slicer;
@@ -66,7 +58,7 @@ namespace WYLJUS002{
            slicer[i] = new unsigned char[width];
        }
 
-       std::cout << "Begin diffmapping\n";
+       std::cout << "Performing diffmap operation\n";
        for (int h = 0; h < height; h++){
            for (int w = 0; w < width; w++){
                slicer[h][w] = (unsigned char) (abs((float)slicei[h][w] - (float)slicej[h][w])/2);
@@ -75,7 +67,7 @@ namespace WYLJUS002{
 
        //Save diffmap
        //Write image slice
-        write_image(output_prefix, slicer); //Doc says the slice should be called output
+        write_image(output_prefix, slicer);
 
         //Write data file
         std::ofstream outfile(output_prefix);
@@ -89,16 +81,15 @@ namespace WYLJUS002{
         }
 
         //Memory cleanup
-        std::cout << "Cleanup memory from diffmap operations\n";
         for (int i = 0; i < height; i++){
             delete[] slicer[i];
         }
         delete[] slicer;
     }
 
-    void VolImage::extract(int sliceId, std::string output_prefix){ //What is output_prefix for?
+    void VolImage::extract(int sliceId, std::string output_prefix){
         //Write image slice
-        write_image(output_prefix, sliceId); //Doc says the slice should be called output
+        write_image(output_prefix, sliceId);
         //Write data file
         std::ofstream outfile(output_prefix);
 
@@ -117,10 +108,6 @@ namespace WYLJUS002{
     }
 
     unsigned char** VolImage::extract_image(std::string base_name, int image_index){
-        //std::cout << "File name: " << base_name << "\n";
-        //std::cout << "Image index: " << image_index << "\n";
-        //std::cout << "width: " << width << " height: " << height << " num images: " << num_images << "\n";
-
         unsigned char ** slice;
         slice = new unsigned char*[height];
         for (int i = 0; i < height; i++){
@@ -128,7 +115,7 @@ namespace WYLJUS002{
         }
 
         std::stringstream strs;
-        strs << "./brain_mri_raws/" << base_name << image_index << ".raw";
+        strs << "./" << base_name << "/" << base_name << image_index << ".raw";
         std::ifstream infile(strs.str(), std::ios::binary);
 
         if(infile){

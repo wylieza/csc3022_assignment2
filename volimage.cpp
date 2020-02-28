@@ -4,9 +4,8 @@
 int main(int argc, char* argv[]){
 
     WYLJUS002::VolImage processor; //Object of the VolImage class
-    //Args handler
-    //std::cout << "There are " << argc << " arguments\n";
 
+    //Args handler
     struct arg_params{
             std::string image_set;
             bool d = false;
@@ -18,23 +17,19 @@ int main(int argc, char* argv[]){
 
     struct arg_params args;
 
-    //std::vector<std::string> args;
-        //args.push_back(std::string(argv[i]));
-        //std::cout << args[i-1] << " ";
-
     if(argc == 2){ //Load, memory usage details, cleanup
         args.image_set = argv[1];
         processor.readImages(args.image_set);    
 
-        processor.print_stats(); //Check these results!
+        processor.print_stats();
+
     }else if (argc == 6 || argc == 5){
         args.image_set = argv[1];
-        if(argv[2][1] == 'd'){ //TODO make this case insensitive
+        if(tolower(argv[2][1]) == 'd'){
             if(argc != 6){
                 std::cout << "Invalid number of arguments detected\n";
                 exit(0);
-            }else{ // Perform the diffmap operation   
-            std::cout << "Diffmap\n";       
+            }else{ // Perform the diffmap operation      
                 args.d = true;
                 args.i = argv[3][0] - '0';
                 args.j = argv[4][0] - '0';
@@ -43,7 +38,7 @@ int main(int argc, char* argv[]){
                 processor.readImages(args.image_set);
                 processor.diffmap(args.i, args.j, args.outf_name);
             }
-        }else if(argv[2][1] == 'x'){
+        }else if(tolower(argv[2][1]) == 'x'){
             if(argc != 5){
                 std::cout << "Invalid number of arguments detected\n";
                 exit(0);
