@@ -17,7 +17,7 @@ int main(int argc, char* argv[]){
 
     struct arg_params args;
 
-    if(argc == 2){ //Load, memory usage details, cleanup
+    if(argc == 2){ //Load imagebase, display memory usage, cleanup
         args.image_set = argv[1];
         processor.readImages(args.image_set);    
         processor.print_stats();

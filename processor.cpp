@@ -104,7 +104,10 @@ namespace WYLJUS002{
 
 
     int VolImage::volImageSize(void){
-        return width * height * num_images * sizeof(unsigned char) + num_images * (height * sizeof(unsigned char*) + 1);
+        return width * height * num_images * sizeof(unsigned char) + num_images * height * sizeof(unsigned char*) + num_images * sizeof(unsigned char**);
+        //width * height * num_images * sizeof(unsigned char)   -> Memory used by all unisigned chars
+        //num_images * height * sizeof(unsigned char*)          -> Memory used by all unsigned char* arrays
+        //num_images * sizeof(unsigned char**)                  -> Memory used to point to the ^ arrays
     }
 
     unsigned char** VolImage::extract_image(std::string base_name, int image_index){
@@ -173,7 +176,7 @@ namespace WYLJUS002{
 
     void VolImage::print_stats(){
         std::cout << "Number of images:  " << num_images << std::endl;
-        std::cout << "Number of bytes required:  " << num_images*width*height*sizeof(unsigned char)<< std::endl;
+        std::cout << "Number of bytes required:  " << volImageSize() << std::endl;
     }
 
 
