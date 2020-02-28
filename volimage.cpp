@@ -20,7 +20,6 @@ int main(int argc, char* argv[]){
     if(argc == 2){ //Load, memory usage details, cleanup
         args.image_set = argv[1];
         processor.readImages(args.image_set);    
-
         processor.print_stats();
 
     }else if (argc == 6 || argc == 5){
