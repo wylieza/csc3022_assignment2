@@ -70,7 +70,9 @@ namespace WYLJUS002{
         write_image(output_prefix, slicer);
 
         //Write data file
-        std::ofstream outfile(output_prefix);
+        std::stringstream strs;
+        strs << output_prefix << ".data";
+        std::ofstream outfile(strs.str());
 
         if(outfile){
             outfile << width << " " << height << " " << "1";
@@ -91,7 +93,9 @@ namespace WYLJUS002{
         //Write image slice
         write_image(output_prefix, sliceId);
         //Write data file
-        std::ofstream outfile(output_prefix);
+        std::stringstream strs;
+        strs << output_prefix << ".data";
+        std::ofstream outfile(strs.str());
 
         if(outfile){
             outfile << width << " " << height << " " << "1";
