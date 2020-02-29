@@ -2,8 +2,8 @@ GCC = g++
 
 VER = -std=c++11
 
-xargs = MRI -x 1 output_x
-dargs = MRI -d 0 1 output_d
+xargs = MRI -x 22 output_x
+dargs = MRI -d 21 22 output_d
 blankargs = MRI
 
 volimage: volimage.o processor.o

@@ -1,5 +1,16 @@
 #include "processor.h"
 
+namespace WYLJUS002{
+    //Integer extractor
+    int to_integer(char myint[]){
+        std::stringstream strs;
+        int x;
+        strs << myint;
+        strs >> x;
+        return x;
+    }
+}
+
 //Main
 int main(int argc, char* argv[]){
 
@@ -20,7 +31,6 @@ int main(int argc, char* argv[]){
     if(argc == 2){ //Load imagebase, display memory usage, cleanup
         args.image_set = argv[1];
         processor.readImages(args.image_set);    
-        processor.print_stats();
 
     }else if (argc == 6 || argc == 5){
         args.image_set = argv[1];
@@ -30,8 +40,8 @@ int main(int argc, char* argv[]){
                 exit(0);
             }else{ // Perform the diffmap operation      
                 args.d = true;
-                args.i = argv[3][0] - '0';
-                args.j = argv[4][0] - '0';
+                args.i = WYLJUS002::to_integer(argv[3]);
+                args.j = WYLJUS002::to_integer(argv[4]);
                 args.outf_name = argv[5];
 
                 processor.readImages(args.image_set);
@@ -43,7 +53,7 @@ int main(int argc, char* argv[]){
                 exit(0);
             }else{ //Perform the extract operation         
                 args.x = true;
-                args.i = argv[3][0] - '0';
+                args.i = WYLJUS002::to_integer(argv[3]);
                 args.outf_name = argv[4];
 
                 processor.readImages(args.image_set);

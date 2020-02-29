@@ -35,10 +35,12 @@ namespace WYLJUS002{
                     if(slice != nullptr){
                         slices.push_back(slice);
                     }else{
-                        std::cout << "An error occured during slice read... Slice not appended!\n";
+                        std::cout << "An error occured during a slice read... Import failed!\n";
+                        return false;
                     }
                 }
-                
+                print_stats();
+                return true;
             }else{
                 std::cout << "Error, file containing image set dimensions empty!\n";
             }
@@ -117,9 +119,6 @@ namespace WYLJUS002{
     unsigned char** VolImage::extract_image(std::string base_name, int image_index){
         unsigned char ** slice;
         slice = new unsigned char*[height];
-        for (int i = 0; i < height; i++){
-            slice[i] = new unsigned char[width];
-        }
 
         std::stringstream strs;
         strs << "./" << base_name << "/" << base_name << image_index << ".raw";
