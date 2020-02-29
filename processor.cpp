@@ -36,23 +36,29 @@ namespace WYLJUS002{
                         slices.push_back(slice);
                     }else{
                         std::cout << "An error occured during a slice read... Import failed!\n";
-                        return false;
+                        exit(0);
                     }
                 }
                 print_stats();
                 return true;
             }else{
                 std::cout << "Error, file containing image set dimensions empty!\n";
+                exit(0);
             }
         }else{
             std::cout << "Error opening file containing image set dimensions!\n";
+            exit(0);
         }
         return false;
     }
 
 
-    void VolImage::diffmap(int scliceI, int sliceJ, std::string output_prefix){
-       unsigned char** slicei = slices[scliceI];
+    void VolImage::diffmap(int sliceI, int sliceJ, std::string output_prefix){
+        if(sliceI > num_images || sliceJ > num_images){
+            std::cout << "Error, you have indexed an image out of the bounds of the dataset!\n";
+            exit(0);
+        }
+       unsigned char** slicei = slices[sliceI];
        unsigned char** slicej = slices[sliceJ];
        unsigned char** slicer;
        slicer = new unsigned char*[height];
@@ -82,6 +88,7 @@ namespace WYLJUS002{
             std::cout << "Data file write success\n";
         }else{
             std::cout << "Error occured while trying to writer to file\n";
+            exit(0);
         }
 
         //Memory cleanup
@@ -92,6 +99,10 @@ namespace WYLJUS002{
     }
 
     void VolImage::extract(int sliceId, std::string output_prefix){
+        if(sliceId > num_images){
+            std::cout << "Error, you have indexed an image out of the bounds of the dataset!\n";
+            exit(0);
+        }
         //Write image slice
         write_image(output_prefix, sliceId);
         //Write data file
@@ -105,6 +116,7 @@ namespace WYLJUS002{
             std::cout << "Data file write success\n";
         }else{
             std::cout << "Error occured while trying to writer to file\n";
+            exit(0);
         }
     }
 
@@ -145,10 +157,12 @@ namespace WYLJUS002{
 
             }else{
                 std::cout << "Error: The image dimensions do not match those spcified in data file";
+                exit(0);
             }
 
         }else{
             std::cout << "An error has occured during reading the file!";
+            exit(0);
         }  
         return NULL;
     }
@@ -174,6 +188,7 @@ namespace WYLJUS002{
 
         }else{
             std::cout << "Error occured while trying to writer to file\n";
+            exit(0);
         }
     }
 
